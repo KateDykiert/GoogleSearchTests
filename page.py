@@ -22,30 +22,30 @@ class BasePage(object):
         sign_in.click()
 
         # input email and click "next" button
-        email_input = BasePageElement()
-        email_input.set_text(self.driver, SignInPageLocators.EMAIL_OR_PHONE_INPUT, login)
+        email_input = BasePageElement(SignInPageLocators.EMAIL_OR_PHONE_INPUT)
+        email_input.set_text(self.driver, login)
         next_button = self.driver.find_element(*SignInPageLocators.NEXT_BUTTON).click()
 
         # wait for the error to show up, if not - accept
         try:
             WebDriverWait(self.driver, 5).until(
-                lambda driver: "Nie możemy znaleźć takiego konta Google" in driver.page_source
-            )
+                    lambda driver: "Nie możemy znaleźć takiego konta Google" in driver.page_source
+                )
             return False
         except TimeoutException:
             print("Provided login has been accepted.")
 
         # input password and click next
-        password_input = BasePageElement()
-        password_input.set_text(self.driver, SignInPageLocators.PASSWORD_INPUT, password)
+        password_input = BasePageElement(SignInPageLocators.PASSWORD_INPUT)
+        password_input.set_text(self.driver, password)
         next_button.click()
 
         # wait for the error to show up, if not - accept
         try:
             WebDriverWait(self.driver, 5).until(
-                lambda driver: "Nieprawidłowe hasło. Spróbuj jeszcze raz lub kliknij „Nie pamiętasz hasła?”, "
+                    lambda driver: "Nieprawidłowe hasło. Spróbuj jeszcze raz lub kliknij „Nie pamiętasz hasła?”, "
                                "by je zresetować." in driver.page_source
-            )
+                )
             return False
         except TimeoutException:
             print("Provided password has been accepted.")

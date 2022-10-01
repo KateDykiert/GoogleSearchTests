@@ -3,6 +3,10 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 import unittest
 import page
+from element import BasePageElement
+from locator import *
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 
@@ -20,15 +24,30 @@ class GoogleSearch(unittest.TestCase):
     #     self.home_page.language_change()
     #     assert True
 
-    def test_unsuccessful_sign_in(self):
+    def not_test_unsuccessful_sign_in(self):
         assert not self.home_page.sign_in("not.a.real.kasia.dykiert.email", "")
 
-    def test_search_phrase(self):
+    def test_get_any_results(self):
 
+        # search phrase in the engine and click enter
+        search_input = BasePageElement(HomePageLocators.MAIN_SEARCH)
+        search_input.set_text(self.driver, "kasia")
+        search_input.send_key(self.driver, Keys.ENTER)
+
+        # check if there is more than 0 results
+        try:
+            WebDriverWait(self.driver, 5).until(
+                    lambda driver: "Około 0 wyników" in driver.page_source
+                )
+            assert False
+        except TimeoutException:
+            print("There is more than 0 results.")
+            assert True
 
     def tearDown(self):
         # self.driver.close()
         pass
+
 
 if __name__ == '__main__':
 

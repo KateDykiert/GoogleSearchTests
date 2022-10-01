@@ -14,7 +14,8 @@ class SignInPageLocators(object):
 class HomePageLocators(object):
     SUGGESTED_LANGUAGE = (By.XPATH, "//a[parent::div[@id='SIvCob']]")
     ACCEPT_ALL_COOKIES = (By.ID, "L2AGLb")
-    MAIN_SEARCH = (By.XPATH, "(//input[@value='Google Search'])[2]")
+    MAIN_SEARCH = (By.XPATH, "/html/body/div[1]/div[3]/form/div[1]/div[1]/div[1]/div/div[2]/input")
+    GOOGLE_SEARCH = (By.XPATH, "/html/body/div[1]/div[3]/form/div[1]/div[1]/div[3]/center/input[1]")
 
 
 class SearchResultPageLocators(object):
