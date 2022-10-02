@@ -21,3 +21,6 @@ class HomePageLocators(object):
 class SearchResultPageLocators(object):
     NEXT_PAGE = (By.XPATH, "//*[@id='pnnext']")
     HOME_PAGE = (By.XPATH, "/html/body/div[4]/div[2]/form/div[1]/div[1]/div[1]/a/img")
+    SETTINGS = (By.XPATH, "/html/body/div[4]/div[2]/div/div[1]/div/span")
+    EXPLICIT_SWITCH = (By.XPATH, "/html/body/div[7]/div/div[7]/div[2]/div[2]/div[3]/div[1]/div/div[2]"
+                                 "/g-selection-control-switch/label/div[2]")

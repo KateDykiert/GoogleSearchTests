@@ -73,6 +73,12 @@ class GoogleSearch(unittest.TestCase):
         search_input.set_text("marvel cinematic universe")
         search_input.send_key(Keys.ENTER)
 
+        result_page = page.SearchResultPage(self.driver)
+        result_page.switch_explicit_search()
+        assert result_page.is_safe_search_on()
+        result_page.switch_explicit_search()
+        assert not result_page.is_safe_search_on()
+
     def tearDown(self):
         # self.driver.close()
         pass

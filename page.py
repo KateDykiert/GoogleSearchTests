@@ -96,3 +96,20 @@ class SearchResultPage(BasePage):
 
     def go_to_home_page(self):
         self.driver.find_element(*SearchResultPageLocators.HOME_PAGE).click()
+
+    def switch_explicit_search(self):
+        self.driver.find_element(*SearchResultPageLocators.SETTINGS).click()
+        WebDriverWait(self.driver, 5).until(
+            EC.visibility_of_element_located(SearchResultPageLocators.EXPLICIT_SWITCH)
+        ).click()
+
+    def is_safe_search_on(self):
+        try:
+            WebDriverWait(self.driver, 5).until(
+                    lambda driver: "SafeSearch włączony" in driver.page_source
+                )
+            print("SafeSearch is on.")
+            return True
+        except TimeoutException:
+            print("SafeSearch is not on.")
+            return False
