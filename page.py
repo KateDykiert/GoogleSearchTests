@@ -33,11 +33,13 @@ class BasePage(object):
         :return: Boolean - True if sign in has been successful. Otherwise, returns False.
         """
         # click "sign in" button
+        print("Clicking the 'Sign in' button.")
         sign_in = self.driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div/div/div/div[2]/a")
         sign_in.click()
 
         # input email and click "next" button
         email_input = BasePageElement(self.driver, SignInPageLocators.EMAIL_OR_PHONE_INPUT)
+        print("Providing login.")
         email_input.set_text(login)
         next_button = self.driver.find_element(*SignInPageLocators.NEXT_BUTTON).click()
 
@@ -46,13 +48,14 @@ class BasePage(object):
             WebDriverWait(self.driver, 5).until(
                     lambda driver: "Nie możemy znaleźć takiego konta Google" in driver.page_source
                 )
-            return False
             print("Provided login has been rejected.")
+            return False
         except TimeoutException:
             print("Provided login has been accepted.")
 
         # input password and click next
         password_input = BasePageElement(self.driver, SignInPageLocators.PASSWORD_INPUT)
+        print("Providing password.")
         password_input.set_text(password)
         next_button.click()
 
@@ -70,6 +73,7 @@ class BasePage(object):
         # check if the user go redirected to home page
         time.sleep(5)
         if self.driver.title == "Google":
+            print("User got redirected to home page.")
             return True
         print("Failed to get redirected.")
         return False
@@ -96,6 +100,7 @@ class HomePage(BasePage):
 
         :param phrase: string
         """
+        print("Searching for '{}'.".format(phrase))
         search_input = BasePageElement(self.driver, HomePageLocators.MAIN_SEARCH)
         search_input.set_text(phrase)
         search_input.send_key(Keys.ENTER)
@@ -108,6 +113,7 @@ class SearchResultPage(BasePage):
         """
         Goes to next page of Google search results.
         """
+        print("Going to the next result page.")
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         self.driver.find_element(*SearchResultPageLocators.NEXT_PAGE).click()
 
@@ -152,7 +158,6 @@ class SearchResultPage(BasePage):
             print("Correct page number is being displayed.")
             return True
         except TimeoutException:
-            print("Incorrect page number is being displayed.")
             return False
 
     def go_to_home_page(self):
@@ -160,6 +165,7 @@ class SearchResultPage(BasePage):
         """
         Clicks the logo of Google and forwards to the homepage of Google.
         """
+        print("Going to home page.")
         self.driver.find_element(*SearchResultPageLocators.HOME_PAGE).click()
 
     def switch_explicit_search(self):
@@ -184,5 +190,5 @@ class SearchResultPage(BasePage):
             print("SafeSearch is on.")
             return True
         except TimeoutException:
-            print("SafeSearch is not on.")
+            print("SafeSearch is off.")
             return False
