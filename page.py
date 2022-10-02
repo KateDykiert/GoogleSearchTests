@@ -22,8 +22,8 @@ class BasePage(object):
         sign_in.click()
 
         # input email and click "next" button
-        email_input = BasePageElement(SignInPageLocators.EMAIL_OR_PHONE_INPUT)
-        email_input.set_text(self.driver, login)
+        email_input = BasePageElement(self.driver, SignInPageLocators.EMAIL_OR_PHONE_INPUT)
+        email_input.set_text(login)
         next_button = self.driver.find_element(*SignInPageLocators.NEXT_BUTTON).click()
 
         # wait for the error to show up, if not - accept
@@ -36,8 +36,8 @@ class BasePage(object):
             print("Provided login has been accepted.")
 
         # input password and click next
-        password_input = BasePageElement(SignInPageLocators.PASSWORD_INPUT)
-        password_input.set_text(self.driver, password)
+        password_input = BasePageElement(self.driver, SignInPageLocators.PASSWORD_INPUT)
+        password_input.set_text(password)
         next_button.click()
 
         # wait for the error to show up, if not - accept
@@ -63,6 +63,36 @@ class HomePage(BasePage):
         accept_all_button = self.wait_for_element(HomePageLocators.ACCEPT_ALL_COOKIES)
         accept_all_button.click()
 
-    def language_change(self):
+    def quick_language_change(self):
         suggested_language = self.driver.find_element(*HomePageLocators.SUGGESTED_LANGUAGE)
         suggested_language.click()
+
+
+class SearchResultPage(BasePage):
+
+    def go_to_next_page(self):
+        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        self.driver.find_element(*SearchResultPageLocators.NEXT_PAGE).click()
+
+    def any_results(self):
+        try:
+            WebDriverWait(self.driver, 5).until(
+                    lambda driver: "Około 0 wyników" in driver.page_source
+                )
+            return False
+        except TimeoutException:
+            print("There is more than 0 results.")
+            return True
+
+    def is_page_number_matching(self, expected_number):
+        try:
+            WebDriverWait(self.driver, 5).until(
+                    lambda driver: "Strona {} z około".format(str(expected_number)) in driver.page_source
+                )
+            return True
+        except TimeoutException:
+            print("Incorrect page number is being displayed.")
+            return False
+
+    def go_to_home_page(self):
+        self.driver.find_element(*SearchResultPageLocators.HOME_PAGE).click()

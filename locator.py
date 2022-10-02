@@ -19,4 +19,5 @@ class HomePageLocators(object):
 
 
 class SearchResultPageLocators(object):
-    pass
+    NEXT_PAGE = (By.XPATH, "//*[@id='pnnext']")
+    HOME_PAGE = (By.XPATH, "/html/body/div[4]/div[2]/form/div[1]/div[1]/div[1]/a/img")
