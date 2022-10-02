@@ -1,0 +1,27 @@
+TEST - Search and change page.
+Searching for 'Apple'.
+There is more than 0 results.
+Going to the next result page.
+Correct page number is being displayed.
+Going to home page.
+.
+TEST - Explicit content switch
+Searching for 'marvel cinematic universe'.
+SafeSearch is on.
+SafeSearch is off.
+.
+TEST - Handling 0 results.
+Searching for 'tyhlvcejfliguhgvjocldfghnimldi nftgliudrvhmd;odrfinr'.
+There are no results.
+.
+TEST - Unsuccessful sign in handling.
+Clicking the 'Sign in' button.
+Providing login.
+Provided login has been rejected.
+.
+----------------------------------------------------------------------
+Ran 4 tests in 63.541s
+
+OK
+
+Process finished with exit code 0
