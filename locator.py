@@ -2,7 +2,8 @@ from selenium.webdriver.common.by import By
 
 
 class BasePageLocators(object):
-    SIGN_IN_BUTTON = (By.XPATH, "//a[text()='Sign in']")
+    SIGN_IN_BUTTON = (By.XPATH, "/html/body/div[1]/div[1]/div/div/div/div[2]/a")
+    # SIGN_IN_BUTTON = (By.CLASS_NAME, "gb_1 gb_2 gb_8d gb_4 gb_8c")
 
 
 class SignInPageLocators(object):

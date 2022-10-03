@@ -34,7 +34,7 @@ class BasePage(object):
         """
         # click "sign in" button
         print("Clicking the 'Sign in' button.")
-        sign_in = self.driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div/div/div/div[2]/a")
+        sign_in = self.driver.find_element(*BasePageLocators.SIGN_IN_BUTTON)
         sign_in.click()
 
         # input email and click "next" button
@@ -46,7 +46,8 @@ class BasePage(object):
         # wait for the error to show up, if not - accept
         try:
             WebDriverWait(self.driver, 5).until(
-                    lambda driver: "Nie możemy znaleźć takiego konta Google" in driver.page_source
+                    lambda driver: "Nie możemy znaleźć takiego konta Google" in driver.page_source or
+                                   "Wpisz tekst, który widzisz lub słyszysz" in driver.page_source
                 )
             print("Provided login has been rejected.")
             return False
